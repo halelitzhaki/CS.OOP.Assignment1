@@ -2,7 +2,7 @@
 
 ## Installation
 
-Use the browser [git](https://github.com/halelitzhaki/CS.OOP.Assignment1.git) to install CS.OOP.Assignment1.
+Use the [git_link](https://github.com/halelitzhaki/CS.OOP.Assignment1.git) to install CS.OOP.Assignment1.
 
 
 ## Usage
