@@ -2,30 +2,29 @@
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Use the browser [git](https://github.com/halelitzhaki/CS.OOP.Assignment1.git) to install CS.OOP.Assignment1.
 
-```bash
-pip install foobar
-```
 
 ## Usage
 
-```python
-import foobar
+```java
+import observer.*;
 
-# returns 'words'
-foobar.pluralize('word')
+// create concrete member (observer) data member
+ConcreteMember member = new ConcreteMember();
 
-# returns 'geese'
-foobar.pluralize('goose')
+// create undoable string builder data member
+UndoableStringBuilder usb = new UndoableStringBuilder();
 
-# returns 'phenomenon'
-foobar.singularize('phenomena')
+// create group admin (observerable)
+GroupAdmin groupAdmin = new GroupAdmin(member, usb);
+
+// updates members
+groupAdmin.updateAll();
+
+// append string to the UndoableStringBuilder data member and update observers
+groupAdmin.append("hello world");
+
+// performs undo action on the UndoableStringBuilder data member  and update observers
+groupAdmin.undo();
 ```
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
