@@ -16,7 +16,7 @@ ConcreteMember member = new ConcreteMember();
 // create undoable string builder data member
 UndoableStringBuilder usb = new UndoableStringBuilder();
 
-// create group admin (observerable)
+// create group admin (observerable) data member
 GroupAdmin groupAdmin = new GroupAdmin(member, usb);
 
 // updates observers
