@@ -19,7 +19,7 @@ UndoableStringBuilder usb = new UndoableStringBuilder();
 // create group admin (observerable)
 GroupAdmin groupAdmin = new GroupAdmin(member, usb);
 
-// updates members
+// updates observers
 groupAdmin.updateAll();
 
 // append string to the UndoableStringBuilder data member and update observers
