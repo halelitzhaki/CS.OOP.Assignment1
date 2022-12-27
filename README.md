@@ -25,6 +25,6 @@ groupAdmin.updateAll();
 // append string to the UndoableStringBuilder data member and update observers
 groupAdmin.append("hello world");
 
-// performs undo action on the UndoableStringBuilder data member  and update observers
+// performs undo action on the UndoableStringBuilder data member and update observers
 groupAdmin.undo();
 ```
