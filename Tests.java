@@ -29,7 +29,7 @@ public class Tests {
         logger.info(() -> JvmUtilities.jvmInfo());
     }
 
-    //ConcreteMember test
+    //ConcreteMember tests
     @Test
     void update() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -41,35 +41,46 @@ public class Tests {
         member.update(usb);
         assertEquals("String Builder new State : abcd\n", outContent.toString());
         System.setOut(originalOut);
+        logger.info(()-> JvmUtilities.objectFootprint(member, usb));
+        logger.info(()->JvmUtilities.objectTotalSize(member, usb));
+        logger.info(() -> JvmUtilities.jvmInfo());
     }
 
-    //GroupAdmin test
-    ConcreteMember member = new ConcreteMember();
-    UndoableStringBuilder usb1 = new UndoableStringBuilder("abcd"), usb2 = new UndoableStringBuilder();
-    GroupAdmin ga1 = new GroupAdmin(member, usb1), ga2 = new GroupAdmin(member, usb2);
-
+    //GroupAdmin tests
     @Test
     void register() {
-        GroupAdmin ga3 = new GroupAdmin();
-        ga3.register(member);
-        assertEquals(member.toString(), ga3.getMembers().get(0).toString());
+        ConcreteMember member = new ConcreteMember();
+        GroupAdmin ga = new GroupAdmin();
+        ga.register(member);
+        assertEquals(member.toString(), ga.getMembers().get(0).toString());
+        logger.info(()-> JvmUtilities.objectFootprint(member, ga));
+        logger.info(()->JvmUtilities.objectTotalSize(member, ga));
+        logger.info(() -> JvmUtilities.jvmInfo());
     }
 
     @Test
     void unregister() {
-        ConcreteMember m1 = new ConcreteMember(), m2 = new ConcreteMember();
-        GroupAdmin ga3 = new GroupAdmin();
-        ga3.register(member);
-        ga3.unregister(member);
-        assertThrows(IndexOutOfBoundsException.class, ()->{ga3.getMembers().get(0).toString();});
-        ga3.register(m1);
-        ga3.register(m2);
-        ga3.unregister(m1);
-        assertEquals(m2.toString(), ga3.getMembers().get(0).toString());
+        ConcreteMember m1 = new ConcreteMember(), m2 = new ConcreteMember(), member = new ConcreteMember();
+        GroupAdmin ga = new GroupAdmin();
+        ga.register(member);
+        ga.unregister(member);
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            ga.getMembers().get(0).toString();
+        });
+        ga.register(m1);
+        ga.register(m2);
+        ga.unregister(m1);
+        assertEquals(m2.toString(), ga.getMembers().get(0).toString());
+        logger.info(() -> JvmUtilities.objectFootprint(m1, m2, member, ga));
+        logger.info(()->JvmUtilities.objectTotalSize(m1, m2, member, ga));
+        logger.info(() -> JvmUtilities.jvmInfo());
     }
 
     @Test
     void insert() {
+        ConcreteMember member = new ConcreteMember();
+        UndoableStringBuilder usb1 = new UndoableStringBuilder("abcd"), usb2 = new UndoableStringBuilder();
+        GroupAdmin ga1 = new GroupAdmin(member, usb1), ga2 = new GroupAdmin(member, usb2);
         ga1.insert(2, " hello world ");
         assertEquals("ab hello world cd", ga1.getUsb().toString());
         ga1.insert(10, null);
@@ -82,18 +93,30 @@ public class Tests {
         assertEquals("hello", ga2.getUsb().toString());
         ga2.insert(10, "hi");
         assertEquals("hello", ga2.getUsb().toString());
+        logger.info(()-> JvmUtilities.objectFootprint(member, usb1, usb2, ga1, ga2));
+        logger.info(()->JvmUtilities.objectTotalSize(member, usb1, usb2, ga1, ga2));
+        logger.info(() -> JvmUtilities.jvmInfo());
     }
 
     @Test
     void append() {
+        ConcreteMember member = new ConcreteMember();
+        UndoableStringBuilder usb1 = new UndoableStringBuilder("abcd"), usb2 = new UndoableStringBuilder();
+        GroupAdmin ga1 = new GroupAdmin(member, usb1), ga2 = new GroupAdmin(member, usb2);
         ga2.append("abcd");
         assertEquals("abcd", ga2.getUsb().toString());
         ga2.append(null);
         assertEquals("abcdnull", ga2.getUsb().toString());
+        logger.info(()-> JvmUtilities.objectFootprint(member, usb1, usb2, ga1, ga2));
+        logger.info(()->JvmUtilities.objectTotalSize(member, usb1, usb2, ga1, ga2));
+        logger.info(() -> JvmUtilities.jvmInfo());
     }
 
     @Test
     void delete() {
+        ConcreteMember member = new ConcreteMember();
+        UndoableStringBuilder usb1 = new UndoableStringBuilder("abcd"), usb2 = new UndoableStringBuilder();
+        GroupAdmin ga1 = new GroupAdmin(member, usb1), ga2 = new GroupAdmin(member, usb2);
         ga1.delete(3,4);
         assertEquals( "abc", ga1.getUsb().toString());
         ga1.delete(3,4);
@@ -104,20 +127,32 @@ public class Tests {
         ga2.append("hello");
         ga2.delete(-2, 5);
         assertEquals("hello", ga2.getUsb().toString());
+        logger.info(()-> JvmUtilities.objectFootprint(member, usb1, usb2, ga1, ga2));
+        logger.info(()->JvmUtilities.objectTotalSize(member, usb1, usb2, ga1, ga2));
+        logger.info(() -> JvmUtilities.jvmInfo());
     }
 
     @Test
     void undo() {
+        ConcreteMember member = new ConcreteMember();
+        UndoableStringBuilder usb1 = new UndoableStringBuilder("abcd"), usb2 = new UndoableStringBuilder();
+        GroupAdmin ga1 = new GroupAdmin(member, usb1), ga2 = new GroupAdmin(member, usb2);
         ga1.insert(2, " hello world ");
 
         ga1.undo();
         ga2.undo();
         assertEquals("abcd", ga1.getUsb().toString());
         assertEquals("", ga2.getUsb().toString());
+        logger.info(()-> JvmUtilities.objectFootprint(member, usb1, usb2, ga1, ga2));
+        logger.info(()->JvmUtilities.objectTotalSize(member, usb1, usb2, ga1, ga2));
+        logger.info(() -> JvmUtilities.jvmInfo());
     }
 
     @Test
     void updateAll() {
+        ConcreteMember member = new ConcreteMember();
+        UndoableStringBuilder usb1 = new UndoableStringBuilder("abcd"), usb2 = new UndoableStringBuilder();
+        GroupAdmin ga1 = new GroupAdmin(member, usb1), ga2 = new GroupAdmin(member, usb2);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         ga2.append("hello world");
@@ -136,5 +171,8 @@ public class Tests {
         ga2.updateAll();
         assertEquals("String Builder new State : hello world!\nString Builder new State : hello world!\n", outContent.toString());
         System.setOut(originalOut);
+        logger.info(()-> JvmUtilities.objectFootprint(member, usb1, usb2, ga1, ga2));
+        logger.info(()->JvmUtilities.objectTotalSize(member, usb1, usb2, ga1, ga2));
+        logger.info(() -> JvmUtilities.jvmInfo());
     }
 }
